@@ -37,11 +37,11 @@ const Footer = () => {
             className="rounded-lg p-4 text-left mx-auto w-full max-w-lg"
             style={{ backgroundColor: "var(--gray-6)" }}
           >
-            <p>대표이사: 홍길동</p>
-            <p>전화: 02 - 1234 - 5678 (대표전화)</p>
+            <p>대표이사: 김윤성</p>
+            <p>전화: 010 - 2286 - 9876 (대표전화)</p>
             <p>사업자등록번호: 855-96-01265</p>
-            <p>주소: 서울 특별시 강남 테헤란로 123, 시너지그룹 빌딩 10층</p>
-            <p>이메일: test@naver.com</p>
+            <p>주소: 서울특별시 서초구 방배로19길 31, 서진빌딩 5층</p>
+            <p>이메일: 90yoonkim@gmail.com</p>
           </div>
         )}
       </div>
