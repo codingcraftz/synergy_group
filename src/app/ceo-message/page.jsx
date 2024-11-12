@@ -26,9 +26,9 @@ export default function CeoMessage() {
       {/* 인사말 본문 섹션 */}
       <div className="w-full max-w-3xl space-y-6 text-lg leading-relaxed text-gray-800">
         <p>
-          시너지그룹 주식회사(이하 '시너지그룹'이라고만 합니다)는 창립 이래
-          "리더님의 꿈을 이루는 삶"을 위해 복합 금융 서비스를 제공해오며 많은
-          리더 님들과 함께 성장해왔습니다.
+          시너지그룹 주식회사(이하 &apos;시너지그룹&apos;이라고만 합니다)는 창립
+          이래 &quot;리더님의 꿈을 이루는 삶&quot;을 위해 복합 금융 서비스를
+          제공해오며 많은 리더 님들과 함께 성장해왔습니다.
         </p>
 
         <p>
