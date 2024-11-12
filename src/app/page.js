@@ -30,7 +30,7 @@ const HomePage = () => {
       </motion.div>
 
       <div className="w-full max-w-xl md:max-w-3xl lg:max-w-4xl py-8 sm:py-16">
-        <p className="text-center font-semibold mb-6 sm:mb-8 text-xl">
+        <p className="font-semibold mb-6 sm:mb-8 text-xl">
           리더님을 위한 세가지 약속
         </p>
         <motion.div
