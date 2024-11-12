@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center p-4">
+    <header className="flex justify-between items-center p-6">
       <div>
         <Link className="text-2xl font-bold" href="/">
           <Image src="/synergy_logo.png" width={200} height={200} alt="logo" />

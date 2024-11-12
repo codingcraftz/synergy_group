@@ -15,9 +15,7 @@ export default function CeoMessage() {
           height={200}
           className="rounded-full mb-6"
         />
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">
-          CEO 인사말
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-800">CEO 인사말</h1>
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mt-2">
           리더님의 꿈을 실현시켜 드리는 시너지그룹!
         </h2>
