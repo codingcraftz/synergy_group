@@ -7,9 +7,7 @@ export default function Contact() {
     <div className="w-full min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 text-gray-900">
       {/* 헤더 섹션 */}
       <div className="w-full max-w-3xl flex flex-col items-center text-center mb-12">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800">
-          문의하기
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-800">문의하기</h1>
         <p className="text-lg sm:text-xl text-gray-700 mt-4">
           궁금하신 점이 있으시면 아래 폼을 통해 언제든지 문의해 주세요. 빠른
           시일 내에 답변드리겠습니다.
