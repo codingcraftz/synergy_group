@@ -17,14 +17,14 @@ export default function Contact() {
       {/* 연락처 정보 섹션 */}
       <div className="w-full max-w-3xl space-y-4 mb-12 text-lg leading-relaxed text-gray-800 text-center">
         <p>
-          <span className="font-semibold">전화번호:</span> 02-1234-5678
+          <span className="font-semibold">전화번호:</span> 010-2286-9876
         </p>
         <p>
-          <span className="font-semibold">이메일:</span> info@synergygroup.com
+          <span className="font-semibold">이메일:</span> 90yoonkim@gmail.com
         </p>
         <p>
-          <span className="font-semibold">주소:</span> 서울특별시 강남구
-          테헤란로 123, 시너지그룹 빌딩 10층
+          <span className="font-semibold">주소:</span> 서울특별시 서초구
+          방배로19길 31, 서진빌딩 5층
         </p>
       </div>
 
