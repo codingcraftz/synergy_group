@@ -5,28 +5,31 @@ import Image from "next/image";
 
 export default function CeoMessage() {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 text-gray-900">
+    <div className="w-full min-h-screen flex flex-col items-center py-16 px-6 lg:px-8 bg-gray-50 text-gray-900">
       {/* CEO 이미지 섹션 */}
-      <div className="w-full max-w-3xl flex flex-col items-center text-center mb-12">
-        <Image
-          src="/ceo_image.jpg" // 실제 CEO 이미지 경로로 변경
-          alt="CEO Image"
-          width={200}
-          height={200}
-          className="rounded-full mb-6"
-        />
-        <h1 className="text-2xl font-bold text-gray-800">CEO 인사말</h1>
-        <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mt-2">
+      <div className="w-full max-w-4xl flex flex-col items-center text-center mb-12 space-y-4">
+        <div className="relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden shadow-lg">
+          <Image
+            src="/ceo_image.jpg" // 실제 CEO 이미지 경로로 변경
+            alt="CEO Image"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="top" // 이미지의 상단을 중심으로 보여줌
+            className="rounded-full"
+          />
+        </div>
+        <h1 className="text-3xl font-bold text-gray-800">CEO 인사말</h1>
+        <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
           리더님의 꿈을 실현시켜 드리는 시너지그룹!
         </h2>
       </div>
 
       {/* 인사말 본문 섹션 */}
-      <div className="w-full max-w-3xl space-y-6 text-lg leading-relaxed text-gray-800">
+      <div className="w-full max-w-4xl space-y-6 text-lg leading-relaxed text-gray-700 px-4 md:px-0">
         <p>
-          시너지그룹 주식회사(이하 &apos;시너지그룹&apos;이라고만 합니다)는 창립
-          이래 &quot;리더님의 꿈을 이루는 삶&quot;을 위해 복합 금융 서비스를
-          제공해오며 많은 리더 님들과 함께 성장해왔습니다.
+          시너지그룹 주식회사(이하 '시너지그룹'이라고만 합니다)는 창립 이래
+          "리더님의 꿈을 이루는 삶"을 위해 복합 금융 서비스를 제공해오며 많은
+          리더 님들과 함께 성장해왔습니다.
         </p>
 
         <p>
@@ -65,7 +68,7 @@ export default function CeoMessage() {
           다하겠습니다.
         </p>
 
-        <p className="text-right mt-6">감사합니다.</p>
+        <p className="text-right font-semibold mt-6">감사합니다.</p>
       </div>
     </div>
   );
