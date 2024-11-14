@@ -23,13 +23,12 @@ export default function CeoMessage() {
           리더님의 꿈을 실현시켜 드리는 시너지그룹!
         </h2>
       </div>
-
       {/* 인사말 본문 섹션 */}
-      <div className="w-full max-w-4xl space-y-6 text-lg leading-relaxed text-gray-700 px-4 md:px-0">
+      <div className="w-full max-w-3xl space-y-6 text-lg leading-relaxed text-gray-800">
         <p>
-          시너지그룹 주식회사(이하 '시너지그룹'이라고만 합니다)는 창립 이래
-          "리더님의 꿈을 이루는 삶"을 위해 복합 금융 서비스를 제공해오며 많은
-          리더 님들과 함께 성장해왔습니다.
+          시너지그룹 주식회사(이하 &apos;시너지그룹&apos;이라고만 합니다)는 창립
+          이래 &quot;리더님의 꿈을 이루는 삶&quot;을 위해 복합 금융 서비스를
+          제공해오며 많은 리더 님들과 함께 성장해왔습니다.
         </p>
 
         <p>
@@ -68,7 +67,7 @@ export default function CeoMessage() {
           다하겠습니다.
         </p>
 
-        <p className="text-right font-semibold mt-6">감사합니다.</p>
+        <p className="text-right mt-6">감사합니다.</p>
       </div>
     </div>
   );
