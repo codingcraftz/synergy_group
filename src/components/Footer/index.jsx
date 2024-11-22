@@ -17,7 +17,7 @@ const Footer = () => {
           {/* <Link href="/privacy-policy" className="mr-4"> */}
           {/*   개인정보처리방침 */}
           {/* </Link> */}
-          <Link href="/updates" className="mr-4">
+          <Link href="/contact" className="mr-4">
             고객센터
           </Link>
           <button onClick={() => setIsOpen(!isOpen)}>
