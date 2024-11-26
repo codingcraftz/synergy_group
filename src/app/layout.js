@@ -12,9 +12,9 @@ export const metadata = {
     url: "https://synergy-group.vercel.app/", // 페이지 URL
     images: [
       {
-        url: "/synergy_logo.png", // 대표 이미지 URL
-        width: 792, // 이미지 너비
-        height: 136, // 이미지 높이
+        url: "/synergy_metadata.png", // 대표 이미지 URL
+        width: 1200, // 이미지 너비
+        height: 630, // 이미지 높이
         alt: "시너지그룹",
       },
     ],
