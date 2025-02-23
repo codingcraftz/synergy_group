@@ -3,32 +3,32 @@
 import React from "react";
 
 export default function Contact() {
-  return (
-    <div className="w-full min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 text-gray-900">
-      {/* 헤더 섹션 */}
-      <div className="w-full max-w-3xl flex flex-col items-center text-center mb-12">
-        <h1 className="text-3xl font-bold text-gray-800">문의하기</h1>
-        <p className="text-lg sm:text-xl text-gray-700 mt-4">
-          궁금하신 점이 있으시면 아래 폼을 통해 언제든지 문의해 주세요. 빠른
-          시일 내에 답변드리겠습니다.
-        </p>
-      </div>
+	return (
+		<div className="w-full min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 text-gray-900">
+			{/* 헤더 섹션 */}
+			<div className="w-full max-w-3xl flex flex-col items-center text-center mb-12">
+				<h1 className="text-3xl font-bold text-gray-800">문의하기</h1>
+				<p className="text-lg sm:text-xl text-gray-700 mt-4">
+					궁금하신 점이 있으시면 아래 폼을 통해 언제든지 문의해 주세요. 빠른
+					시일 내에 답변드리겠습니다.
+				</p>
+			</div>
 
-      {/* 연락처 정보 섹션 */}
-      <div className="w-full max-w-3xl space-y-4 mb-12 text-lg leading-relaxed text-gray-800 text-center">
-        <p>
-          <span className="font-semibold">전화번호:</span> 010-2286-9876
-        </p>
-        <p>
-          <span className="font-semibold">이메일:</span> 90yoonkim@gmail.com
-        </p>
-        <p>
-          <span className="font-semibold">주소:</span> 서울특별시 서초구
-          방배로19길 31, 서진빌딩 5층
-        </p>
-      </div>
+			{/* 연락처 정보 섹션 */}
+			<div className="w-full max-w-3xl space-y-4 mb-12 text-lg leading-relaxed text-gray-800 text-center">
+				<p>
+					<span className="font-semibold">전화번호:</span> 010-8494-8906
+				</p>
+				<p>
+					<span className="font-semibold">이메일:</span> 90yoonkim@gmail.com
+				</p>
+				<p>
+					<span className="font-semibold">주소:</span> 서울특별시 송파구
+					위례서로 252, 우원플러스 송파 203호
+				</p>
+			</div>
 
-      {/* 문의 폼 섹션 */}
+			{/* 문의 폼 섹션 
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
         <form className="space-y-6">
           <div>
@@ -89,6 +89,7 @@ export default function Contact() {
           </div>
         </form>
       </div>
-    </div>
-  );
+				*/}
+		</div>
+	);
 }
