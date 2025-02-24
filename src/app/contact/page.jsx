@@ -28,68 +28,66 @@ export default function Contact() {
 				</p>
 			</div>
 
-			{/* 문의 폼 섹션 
-      <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
-        <form className="space-y-6">
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              이름
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
+			<div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
+				<form className="space-y-6">
+					<div>
+						<label
+							htmlFor="name"
+							className="block text-sm font-medium text-gray-700"
+						>
+							이름
+						</label>
+						<input
+							type="text"
+							id="name"
+							name="name"
+							className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							required
+						/>
+					</div>
 
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              이메일
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
+					<div>
+						<label
+							htmlFor="email"
+							className="block text-sm font-medium text-gray-700"
+						>
+							이메일
+						</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							required
+						/>
+					</div>
 
-          <div>
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-gray-700"
-            >
-              메시지
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              required
-            ></textarea>
-          </div>
+					<div>
+						<label
+							htmlFor="message"
+							className="block text-sm font-medium text-gray-700"
+						>
+							메시지
+						</label>
+						<textarea
+							id="message"
+							name="message"
+							rows="4"
+							className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							required
+						></textarea>
+					</div>
 
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              보내기
-            </button>
-          </div>
-        </form>
-      </div>
-				*/}
+					<div className="flex justify-center">
+						<button
+							type="submit"
+							className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md shadow-md focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+						>
+							보내기
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }
