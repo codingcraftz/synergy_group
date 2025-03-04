@@ -78,7 +78,7 @@ export default function CeoMessage() {
               transition={{ delay: 1.2, duration: 0.8 }}
               className="text-lg text-blue-200 mt-4 font-light"
             >
-              "신뢰할 수 있는 파트너십으로 함께 성장하는 미래를 만들어갑니다"
+              &ldquo;신뢰할 수 있는 파트너십으로 함께 성장하는 미래를 만들어갑니다&rdquo;
             </motion.p>
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -115,7 +115,7 @@ export default function CeoMessage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">김윤성</h2>
             <p className="text-xl text-gray-600 mb-4">시너지그룹 대표이사</p>
             <p className="text-gray-500">
-              "리더님의 꿈을 이루는 삶을 위해 최선을 다하겠습니다"
+              &ldquo;리더님의 꿈을 이루는 삶을 위해 최선을 다하겠습니다&rdquo;
             </p>
           </div>
         </motion.div>
@@ -131,7 +131,7 @@ export default function CeoMessage() {
           <div className="space-y-6 text-lg leading-relaxed text-gray-700 px-8">
             <motion.p {...fadeInUp}>
               시너지그룹 주식회사(이하 &apos;시너지그룹&apos;이라고만 합니다)는 창립
-              이래 &quot;리더님의 꿈을 이루는 삶&quot;을 위해 복합 금융 서비스를
+              이래 &ldquo;리더님의 꿈을 이루는 삶&rdquo;을 위해 복합 금융 서비스를
               제공해오며 많은 리더 님들과 함께 성장해왔습니다.
             </motion.p>
 
