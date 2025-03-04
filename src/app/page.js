@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { FaHandshake, FaChartLine, FaUsers } from 'react-icons/fa';
 
 const HomePage = () => {
   return (
@@ -28,57 +29,54 @@ const HomePage = () => {
           전문 금융 및 법률 서비스로 사업의 가치를 높여드립니다.
         </p>
       </motion.div>
-
-      <div className="w-full max-w-xl md:max-w-3xl lg:max-w-4xl py-8 sm:py-16">
-        <p className="font-semibold mb-6 sm:mb-8 text-xl">
-          리더님을 위한 세가지 약속
-        </p>
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-4"
-        >
-          {[
-            {
-              title: "편의성 제공",
-              description:
-                "법무, 세무, 노무, 행정 등 다양한 분야에서 사업의 효율을 높여주는 믿음직한 파트너가 되겠습니다.",
-            },
-            {
-              title: "든든한 지원",
-              description:
-                "사업 자금 지원부터 법률 문제 해결까지 원스톱 솔루션을 제공합니다.",
-            },
-            {
-              title: "미래를 위한 동반자",
-              description:
-                "현 상태를 진단하고, 미래 성장을 위한 맞춤 솔루션을 제시하여 성공을 함께 이루어 나갑니다.",
-            },
-          ].map((content, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              className="transform transition-transform duration-300"
-            >
-              <div
-                className="p-4 sm:p-6 h-full rounded-lg shadow-lg hover:shadow-2xl transition-shadow flex flex-col justify-between"
-                style={{
-                  backgroundColor: "var(--slate-3)",
-                  border: "2px solid var(--gray-2)",
-                }}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-gray-900">리더님을 위한 세가지 약속</h2>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <FaHandshake className="w-12 h-12 text-blue-400" />,
+                title: "편의성 제공",
+                description: "법무, 세무, 노무, 행정 등 다양한 분야에서 사업의 효율을 높여주는 믿음직한 파트너가 되겠습니다."
+              },
+              {
+                icon: <FaChartLine className="w-12 h-12 text-blue-400" />,
+                title: "든든한 지원",
+                description: "사업 자금 지원부터 법률 문제 해결까지 원스톱 솔루션을 제공합니다."
+              },
+              {
+                icon: <FaUsers className="w-12 h-12 text-blue-400" />,
+                title: "미래를 위한 동반자",
+                description: "현 상태를 진단하고, 미래 성장을 위한 맞춤 솔루션을 제시하여 성공을 함께 이루어 나갑니다."
+              }
+            ].map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow"
               >
-                <div className="mb-4">
-                  <p className="font-semibold text-lg">{content.title}</p>
+                <div className="flex flex-col items-center text-center space-y-4">
+                  {service.icon}
+                  <h3 className="text-xl font-semibold text-gray-900">{service.title}</h3>
+                  <p className="text-gray-600">{service.description}</p>
                 </div>
-                <p className="flex-1" size="2">
-                  {content.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
     </div>
   );
 };
