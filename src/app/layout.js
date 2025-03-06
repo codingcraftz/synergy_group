@@ -1,21 +1,28 @@
-import Header from "@/components/Header";
-import "./globals.css";
-import Footer from "@/components/Footer";
+import Header from '@/components/Header';
+import './globals.css';
+import Footer from '@/components/Footer';
+import { Noto_Serif_KR } from 'next/font/google';
+
+const notoSerifKr = Noto_Serif_KR({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+});
 
 export const metadata = {
-  title: "시너지그룹", // 페이지 제목
-  description: "전문 금융 및 법률 서비스로 사업의 가치를 높여드립니다.", // 페이지 설명
-  keywords: "synergy, 법률, 상담", // 키워드
+  title: '시너지그룹', // 페이지 제목
+  description: '전문 금융 및 법률 서비스로 사업의 가치를 높여드립니다.', // 페이지 설명
+  keywords: 'synergy, 법률, 상담', // 키워드
   openGraph: {
-    title: "시너지그룹",
-    description: "전문 금융 및 법률 서비스로 사업의 가치를 높여드립니다.",
-    url: "https://synergy-group.vercel.app/", // 페이지 URL
+    title: '시너지그룹',
+    description: '전문 금융 및 법률 서비스로 사업의 가치를 높여드립니다.',
+    url: 'https://synergy-group.vercel.app/', // 페이지 URL
     images: [
       {
-        url: "/synergy_metadata.png", // 대표 이미지 URL
+        url: '/synergy_metadata.png', // 대표 이미지 URL
         width: 1200,
         height: 630,
-        alt: "시너지그룹",
+        alt: '시너지그룹',
       },
     ],
   },
@@ -23,7 +30,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ko">
+    <html lang='ko'>
       <body>
         <Header />
         <main>{children}</main>
