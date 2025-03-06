@@ -43,7 +43,7 @@ export default function HomePage() {
             transition={{ delay: 1, duration: 0.8 }}
             className='text-2xl md:text-3xl text-white font-semibold mt-6'
           >
-            "비즈니스 성공을 함께 만들어가는 최고의 파트너"
+            &ldquo;비즈니스 성공을 함께 만들어가는 최고의 파트너&rdquo;
           </motion.p>
         </div>
       </motion.div>
