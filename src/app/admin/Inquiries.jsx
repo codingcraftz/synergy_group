@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Pagination from '@/components/Pagination';
 
@@ -13,11 +13,7 @@ export default function Inquiries() {
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 5;
 
-  useEffect(() => {
-    fetchInquiries();
-  }, [currentPage]);
-
-  async function fetchInquiries() {
+  const fetchInquiries = useCallback(async () => {
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage - 1;
     const { data, count, error } = await supabase
@@ -33,7 +29,11 @@ export default function Inquiries() {
       setInquiries(data);
       setTotalPages(Math.ceil(count / itemsPerPage));
     }
-  }
+  }, [currentPage, itemsPerPage]);
+
+  useEffect(() => {
+    fetchInquiries();
+  }, [fetchInquiries]);
 
   async function markAsRead(id) {
     await supabase.from('contact_inquiries').update({ is_read: true }).eq('id', id);
