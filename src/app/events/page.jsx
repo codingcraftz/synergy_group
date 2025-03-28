@@ -511,7 +511,7 @@ export default function EventsPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="w-full h-[40vh] relative overflow-hidden"
+        className="w-full h-[70vh] relative overflow-hidden"
       >
         <Image
           src="/events_main2.jpeg"
@@ -536,6 +536,20 @@ export default function EventsPage() {
             }}
             className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]"
           />
+          <motion.div
+            initial={{ opacity: 0.1 }}
+            animate={{
+              opacity: [0.1, 0.3, 0.1],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              repeatType: "reverse",
+              delay: 1,
+            }}
+            className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(255,255,255,0.2),transparent_50%)]"
+          />
         </div>
 
         {/* 콘텐츠 */}
@@ -544,7 +558,7 @@ export default function EventsPage() {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="space-y-4 max-w-3xl relative z-10"
+            className="space-y-6 max-w-3xl relative z-10"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -559,7 +573,7 @@ export default function EventsPage() {
               transition={{ delay: 0.6, duration: 0.8 }}
               className="text-4xl md:text-5xl font-bold text-white"
             >
-              행사 안내
+              행사 일정
             </motion.h1>
 
             <motion.p

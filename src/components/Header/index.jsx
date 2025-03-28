@@ -43,7 +43,7 @@ export default function Header() {
             href="/events"
             className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
           >
-            행사
+            행사 일정
           </Link>
           <Link
             href="/contact"
