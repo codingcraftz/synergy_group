@@ -53,7 +53,12 @@ export default function Header() {
           </Link>
           {isAdmin && (
             <div className="flex items-center gap-2">
-              <span className="text-green-400">관리자</span>
+              <Link
+                href="/admin"
+                className="text-green-400 hover:text-green-300 flex items-center gap-1"
+              >
+                <span>관리자</span>
+              </Link>
               <Button
                 variant="ghost"
                 size="icon"

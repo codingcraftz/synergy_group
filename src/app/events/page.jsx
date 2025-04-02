@@ -20,6 +20,7 @@ import {
   Upload,
   X,
   Loader2,
+  UserRound,
 } from "lucide-react";
 import { supabase } from "@/utils/supabase";
 import { useToast } from "@/hooks/use-toast";
@@ -56,6 +57,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useForm } from "react-hook-form";
+import { UploadDropzone } from "@/components/ui/upload-dropzone";
+import EventRegistrationForm from "@/components/Events/EventRegistrationForm";
+import EventParticipantsList from "@/components/Events/EventParticipantsList";
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
@@ -66,6 +70,10 @@ export default function EventsPage() {
   const [imagePreview, setImagePreview] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  const [selectedEventForRegistration, setSelectedEventForRegistration] = useState(null);
+  const [participantsListOpen, setParticipantsListOpen] = useState(false);
+  const [selectedEventForParticipants, setSelectedEventForParticipants] = useState(null);
   const fileInputRef = useRef(null);
   const { isAdmin } = useAdmin();
   const { toast } = useToast();
@@ -459,6 +467,18 @@ export default function EventsPage() {
     }
   };
 
+  // 웹 신청 다이얼로그 열기
+  const handleWebRegistration = (event) => {
+    setSelectedEventForRegistration(event);
+    setRegistrationOpen(true);
+  };
+
+  // 참가자 목록 다이얼로그 열기
+  const handleViewParticipants = (event) => {
+    setSelectedEventForParticipants(event);
+    setParticipantsListOpen(true);
+  };
+
   // 이벤트 접수 상태 확인 함수
   const checkRegistrationStatus = (event) => {
     const now = new Date();
@@ -733,7 +753,11 @@ export default function EventsPage() {
                           checkRegistrationStatus(event).isRegistrationOpen && (
                             <>
                               {event.webRegistrationEnabled && (
-                                <Button variant="outline" className="group bg-blue-50">
+                                <Button
+                                  variant="outline"
+                                  className="group bg-blue-50"
+                                  onClick={() => handleWebRegistration(event)}
+                                >
                                   웹에서 신청하기
                                   <ArrowRightCircle className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                 </Button>
@@ -758,6 +782,14 @@ export default function EventsPage() {
                       {/* 관리자용 버튼 */}
                       {isAdmin && (
                         <div className="flex space-x-2 self-end">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => handleViewParticipants(event)}
+                            title="참가자 목록 보기"
+                          >
+                            <UserRound className="h-4 w-4" />
+                          </Button>
                           <Button
                             variant="outline"
                             size="icon"
@@ -923,27 +955,19 @@ export default function EventsPage() {
                     <FormLabel>행사 이미지</FormLabel>
                     <FormControl>
                       <div className="space-y-4">
-                        {/* 이미지 업로드 버튼 */}
-                        {!imagePreview && (
-                          <div className="flex items-center justify-center w-full">
-                            <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-blue-200 border-dashed rounded-lg cursor-pointer bg-blue-50 hover:bg-blue-100 transition-colors">
-                              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                <Upload className="w-10 h-10 mb-2 text-blue-500" />
-                                <p className="mb-2 text-sm text-blue-700">
-                                  <span className="font-semibold">클릭하여 이미지 업로드</span>
-                                </p>
-                                <p className="text-xs text-gray-500">JPG, PNG, WEBP (최대 5MB)</p>
-                              </div>
-                              <input
-                                ref={fileInputRef}
-                                type="file"
-                                className="hidden"
-                                accept="image/jpeg, image/png, image/webp"
-                                onChange={handleImageChange}
-                              />
-                            </label>
-                          </div>
-                        )}
+                        {/* 이미지 업로드 영역 */}
+                        <UploadDropzone
+                          className={`${imagePreview ? "hidden" : ""} bg-blue-50 hover:bg-blue-100 border-blue-200`}
+                          onFileSelect={(file) => {
+                            setUploadedImage(file);
+                            const imageUrl = URL.createObjectURL(file);
+                            setImagePreview(imageUrl);
+                          }}
+                          maxSize={5 * 1024 * 1024}
+                          accept={{
+                            "image/*": [".png", ".jpg", ".jpeg", ".webp"],
+                          }}
+                        />
 
                         {/* 이미지 미리보기 */}
                         {imagePreview && (
@@ -1166,6 +1190,26 @@ export default function EventsPage() {
           </Form>
         </DialogContent>
       </Dialog>
+
+      {/* 이벤트 참가 신청 폼 */}
+      <EventRegistrationForm
+        open={registrationOpen}
+        onOpenChange={setRegistrationOpen}
+        event={selectedEventForRegistration}
+        onRegistrationComplete={() => {
+          toast({
+            title: "참가 신청 완료",
+            description: "행사 참가 신청이 완료되었습니다.",
+          });
+        }}
+      />
+
+      {/* 참가자 목록 (관리자용) */}
+      <EventParticipantsList
+        open={participantsListOpen}
+        onOpenChange={setParticipantsListOpen}
+        event={selectedEventForParticipants}
+      />
     </div>
   );
 }
