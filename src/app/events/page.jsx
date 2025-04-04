@@ -755,10 +755,10 @@ export default function EventsPage() {
                               {event.webRegistrationEnabled && (
                                 <Button
                                   variant="outline"
-                                  className="group bg-blue-50"
+                                  className="group bg-blue-50 h-10 min-w-32 flex items-center justify-center space-x-1"
                                   onClick={() => handleWebRegistration(event)}
                                 >
-                                  웹에서 신청하기
+                                  <span>웹에서 신청하기</span>
                                   <ArrowRightCircle className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                               )}
@@ -767,12 +767,12 @@ export default function EventsPage() {
                                   href={event.kakaoPlusUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-yellow-50 px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                                  className="inline-flex h-10 min-w-32 items-center justify-center rounded-md border border-input bg-yellow-50 px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                                 >
                                   <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="#000000">
                                     <path d="M12 3C5.9 3 1 6.7 1 11.3c0 2.6 1.7 5 4.5 6.5-.2.8-.8 2.7-.8 3.1 0 .4.2.5.4.4.2-.1 2.6-1.7 3.7-2.5.9.2 1.9.3 3.2.3 6.1 0 11-3.7 11-8.3C23 6.7 18.1 3 12 3" />
                                   </svg>
-                                  카카오톡으로 신청
+                                  <span>카카오톡으로 신청</span>
                                 </a>
                               )}
                             </>

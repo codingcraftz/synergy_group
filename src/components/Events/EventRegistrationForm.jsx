@@ -43,6 +43,24 @@ export default function EventRegistrationForm({
     },
   });
 
+  // 전화번호 자동 포맷팅 함수
+  const formatPhoneNumber = (value) => {
+    // 숫자만 추출
+    const numbers = value.replace(/\D/g, "");
+
+    // 포맷팅된 전화번호 생성
+    let formattedPhone = "";
+    if (numbers.length <= 3) {
+      formattedPhone = numbers;
+    } else if (numbers.length <= 7) {
+      formattedPhone = `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+    } else {
+      formattedPhone = `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+    }
+
+    return formattedPhone;
+  };
+
   const onSubmit = async (values) => {
     try {
       setIsSubmitting(true);
@@ -157,7 +175,14 @@ export default function EventRegistrationForm({
                     연락처 <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="연락처를 입력하세요 (예: 010-1234-5678)" {...field} />
+                    <Input
+                      placeholder="연락처를 입력하세요 (예: 010-1234-5678)"
+                      value={field.value}
+                      onChange={(e) => {
+                        const formattedValue = formatPhoneNumber(e.target.value);
+                        field.onChange(formattedValue);
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
