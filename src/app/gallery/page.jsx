@@ -96,7 +96,7 @@ export default function GalleryPage() {
               transition={{ delay: 0.6, duration: 0.8 }}
               className="text-4xl md:text-5xl font-bold text-white"
             >
-              갤러리
+              사진 아카이브
             </motion.h1>
 
             <motion.p

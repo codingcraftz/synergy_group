@@ -31,31 +31,31 @@ export default function Header() {
             href="/ceo-message"
             className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
           >
-            CEO 인사말
-          </Link>
-          <Link
-            href="/gallery"
-            className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
-          >
-            갤러리
-          </Link>
-          <Link
-            href="/events"
-            className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
-          >
-            행사 일정
+            CEO 메세지
           </Link>
           <Link
             href="/branches"
             className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
           >
-            지점안내
+            지점 안내
+          </Link>
+          <Link
+            href="/events"
+            className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
+          >
+            일정 안내
+          </Link>
+          <Link
+            href="/gallery"
+            className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
+          >
+            사진 아카이브
           </Link>
           <Link
             href="/videos"
             className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
           >
-            이벤트 영상
+            영상 아카이브
           </Link>
           <Link
             href="/contact"

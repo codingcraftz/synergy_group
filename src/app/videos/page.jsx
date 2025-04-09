@@ -20,7 +20,7 @@ export default function VideosPage() {
         className="w-full h-[70vh] relative overflow-hidden"
       >
         <Image
-          src="/gallery_main.jpg"
+          src="/video_main2.jpg"
           fill
           style={{ objectFit: "cover" }}
           alt="시너지그룹 영상"
@@ -79,7 +79,7 @@ export default function VideosPage() {
               transition={{ delay: 0.6, duration: 0.8 }}
               className="text-4xl md:text-5xl font-bold text-white"
             >
-              이벤트 영상
+              영상 아카이브
             </motion.h1>
 
             <motion.p
@@ -122,7 +122,7 @@ export default function VideosPage() {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center">
               <span className="w-2 h-8 bg-blue-500 rounded-full mr-3"></span>
-              특별 이벤트 영상
+              시너지그룹의 소중한 추억
             </h2>
           </div>
 
