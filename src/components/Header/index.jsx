@@ -52,6 +52,12 @@ export default function Header() {
             지점안내
           </Link>
           <Link
+            href="/videos"
+            className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
+          >
+            이벤트 영상
+          </Link>
+          <Link
             href="/contact"
             className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
           >
