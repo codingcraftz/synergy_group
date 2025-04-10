@@ -382,7 +382,6 @@ export default function CareersPage() {
               <div className="flex flex-wrap justify-center gap-4 mt-4">
                 <div className="bg-gray-50 px-4 py-2 rounded-full text-sm">비품 지원</div>
                 <div className="bg-gray-50 px-4 py-2 rounded-full text-sm">무료 DB 제공</div>
-                <div className="bg-gray-50 px-4 py-2 rounded-full text-sm">니즈 완료 가망고객</div>
                 <div className="bg-gray-50 px-4 py-2 rounded-full text-sm">신입양성 아카데미</div>
               </div>
             </motion.div>
