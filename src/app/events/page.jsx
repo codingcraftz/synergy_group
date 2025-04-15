@@ -526,12 +526,12 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* 히어로 섹션 */}
+      {/* 히어로 섹션 - 모바일 최적화 */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="w-full h-[70vh] relative overflow-hidden"
+        className="w-full h-[50vh] sm:h-[60vh] md:h-[70vh] relative overflow-hidden"
       >
         <Image
           src="/events_main2.jpeg"
@@ -572,26 +572,26 @@ export default function EventsPage() {
           />
         </div>
 
-        {/* 콘텐츠 */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        {/* 콘텐츠 - 모바일 최적화 */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 sm:px-6">
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="space-y-6 max-w-3xl relative z-10"
+            className="space-y-4 sm:space-y-6 max-w-3xl relative z-10"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.5 }}
-              className="w-20 h-1 bg-[#90ccef] mx-auto rounded-full"
+              className="w-16 sm:w-20 h-1 bg-[#90ccef] mx-auto rounded-full"
             />
 
             <motion.h1
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="text-4xl md:text-5xl font-bold text-white"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-white"
             >
               행사 일정
             </motion.h1>
@@ -600,7 +600,7 @@ export default function EventsPage() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="text-xl text-blue-100"
+              className="text-lg sm:text-xl text-blue-100"
             >
               시너지그룹의 특별한 행사와 이벤트
             </motion.p>
@@ -609,7 +609,7 @@ export default function EventsPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 0.8 }}
-              className="text-lg text-blue-200 font-light"
+              className="text-base sm:text-lg text-blue-200 font-light"
             >
               함께 성장하고 발전하는 소중한 시간을 만들어갑니다
             </motion.p>
@@ -618,50 +618,52 @@ export default function EventsPage() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.5 }}
-              className="w-20 h-1 bg-[#90ccef] mx-auto rounded-full"
+              className="w-16 sm:w-20 h-1 bg-[#90ccef] mx-auto rounded-full"
             />
           </motion.div>
         </div>
       </motion.div>
 
-      {/* 메인 콘텐츠 - 타임라인 */}
-      <div className="container mx-auto px-4 py-12">
+      {/* 메인 콘텐츠 - 타임라인 모바일 최적화 */}
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         {/* 관리자용 이벤트 추가 버튼 */}
         {isAdmin && (
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.8 }}
-            className="mb-8 flex justify-end"
+            className="mb-6 sm:mb-8 flex justify-center sm:justify-end"
           >
             <Button
               onClick={handleAddEvent}
-              className="bg-blue-600 hover:bg-blue-700 text-white shadow-md rounded-full pl-4 pr-5 py-2.5 transition-all"
+              className="bg-blue-600 hover:bg-blue-700 text-white shadow-md rounded-full pl-3 sm:pl-4 pr-4 sm:pr-5 py-2 sm:py-2.5 text-sm sm:text-base transition-all"
             >
-              <PlusCircle className="w-4 h-4 mr-2" />새 행사 추가하기
+              <PlusCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />새 행사 추가하기
             </Button>
           </motion.div>
         )}
 
         {/* 로딩 상태 */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-12 h-12 border-4 border-t-blue-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-lg text-gray-600">행사 정보를 불러오는 중...</p>
+          <div className="flex flex-col items-center justify-center py-12 sm:py-20">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-t-blue-500 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-base sm:text-lg text-gray-600">행사 정보를 불러오는 중...</p>
           </div>
         ) : events.length === 0 ? (
-          <div className="text-center py-20">
-            <Calendar className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-2xl font-bold text-gray-600 mb-2">등록된 행사가 없습니다</h3>
-            <p className="text-gray-500 max-w-md mx-auto">
+          <div className="text-center py-12 sm:py-20">
+            <Calendar className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-gray-400 mb-4" />
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-600 mb-2">
+              등록된 행사가 없습니다
+            </h3>
+            <p className="text-sm sm:text-base text-gray-500 max-w-md mx-auto">
               현재 등록된 행사가 없습니다.{" "}
               {isAdmin && "새 행사 추가하기 버튼을 클릭하여 행사를 등록해주세요."}
             </p>
           </div>
         ) : (
-          <div className="space-y-16 relative">
-            {/* 타임라인 세로선 */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-100 z-0"></div>
+          <div className="space-y-8 sm:space-y-16 relative">
+            {/* 타임라인 세로선 - 모바일에서는 숨김, 태블릿 이상에서 표시 */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-blue-100 z-0 hidden sm:block"></div>
 
             {/* 이벤트 목록 */}
             {events.map((event, index) => (
@@ -671,14 +673,24 @@ export default function EventsPage() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
-                className={`flex items-center ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"} relative z-10`}
+                className={`flex flex-col sm:flex-row items-center ${
+                  index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
+                } relative z-10`}
               >
-                {/* 타임라인 점 */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-md z-20"></div>
+                {/* 타임라인 점 - 모바일에서는 숨김 */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-blue-500 rounded-full border-4 border-white shadow-md z-20 hidden sm:block"></div>
 
-                {/* 날짜 표시 (모바일에서는 숨김) */}
+                {/* 날짜 표시 - 모바일에서는 카드 상단에 표시 */}
+                <div className="w-full sm:hidden mb-3 flex justify-center">
+                  <div className="bg-blue-50 text-blue-800 px-3 py-1.5 rounded-lg shadow-sm text-sm">
+                    <CalendarIcon className="inline-block mr-1.5 h-3.5 w-3.5" />
+                    {formatEventPeriod(event.startDate, event.endDate)}
+                  </div>
+                </div>
+
+                {/* 날짜 표시 (태블릿 이상) */}
                 <div
-                  className={`hidden md:flex w-1/2 ${index % 2 === 0 ? "justify-end pr-8" : "justify-start pl-8"}`}
+                  className={`hidden sm:flex w-1/2 ${index % 2 === 0 ? "justify-end pr-8" : "justify-start pl-8"}`}
                 >
                   <div className="bg-blue-50 text-blue-800 px-4 py-2 rounded-lg shadow-sm">
                     <CalendarIcon className="inline-block mr-2 h-4 w-4" />
@@ -687,9 +699,9 @@ export default function EventsPage() {
                 </div>
 
                 {/* 이벤트 카드 */}
-                <div className="w-full md:w-1/2 px-4 md:px-8">
+                <div className="w-full sm:w-1/2 px-0 sm:px-8">
                   <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow border-blue-100">
-                    <div className="relative h-48 w-full">
+                    <div className="relative h-40 sm:h-48 w-full">
                       <Image
                         src={event.imageUrl || "/event-default.jpg"}
                         alt={event.title}
@@ -697,42 +709,44 @@ export default function EventsPage() {
                         className="object-cover"
                       />
                       {/* 모바일용 날짜 표시 */}
-                      <div className="absolute top-3 right-3 md:hidden bg-blue-600 text-white px-3 py-1 rounded-full text-sm shadow-md">
+                      <div className="absolute top-3 right-3 sm:hidden bg-blue-600 text-white px-2 py-0.5 rounded-full text-xs shadow-md">
                         {formatShortDate(event.startDate)}
                       </div>
                     </div>
-                    <CardHeader>
-                      <CardTitle className="text-xl md:text-2xl text-blue-900">
+                    <CardHeader className="px-4 sm:px-6 py-3 sm:py-4">
+                      <CardTitle className="text-lg sm:text-xl md:text-2xl text-blue-900">
                         {event.title}
                       </CardTitle>
-                      <CardDescription className="flex items-center text-gray-600 mt-1">
-                        <MapPin className="h-4 w-4 mr-1" />
+                      <CardDescription className="flex items-center text-gray-600 mt-1 text-sm sm:text-base">
+                        <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1" />
                         {event.location}
                       </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-700 whitespace-pre-line mb-4">{event.description}</p>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                    <CardContent className="px-4 sm:px-6 py-2 sm:py-4">
+                      <p className="text-gray-700 text-sm sm:text-base whitespace-pre-line mb-3 sm:mb-4 line-clamp-3">
+                        {event.description}
+                      </p>
+                      <div className="grid grid-cols-1 gap-1.5 sm:gap-2 text-xs sm:text-sm">
                         <div className="flex items-center text-gray-600">
-                          <Users className="h-4 w-4 mr-2" />
+                          <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
                           <span>정원: {event.maxParticipants}명</span>
                         </div>
                         <div className="flex items-center text-gray-600">
-                          <Calendar className="h-4 w-4 mr-2" />
+                          <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
                           <span>기간: {formatEventPeriod(event.startDate, event.endDate)}</span>
                         </div>
                         {/* 접수 관련 정보는 웹/카카오 접수가 활성화된 경우에만 표시 */}
                         {(event.webRegistrationEnabled || event.kakaoRegistrationEnabled) && (
                           <>
                             <div className="flex items-center text-gray-600">
-                              <Clock className="h-4 w-4 mr-2" />
+                              <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
                               <span>
                                 접수: {formatShortDate(event.registrationStart)} ~{" "}
                                 {formatShortDate(event.registrationEnd)}
                               </span>
                             </div>
                             <div className="flex items-center text-gray-600">
-                              <Info className="h-4 w-4 mr-2" />
+                              <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 sm:mr-2" />
                               <span>
                                 상태:{" "}
                                 <span
@@ -746,64 +760,83 @@ export default function EventsPage() {
                         )}
                       </div>
                     </CardContent>
-                    <CardFooter className="flex flex-col sm:flex-row justify-between border-t pt-4 gap-3">
-                      <div className="flex flex-wrap gap-2">
-                        {/* 접수 버튼은 접수 가능한 상태일 때만 표시 */}
-                        {(event.webRegistrationEnabled || event.kakaoRegistrationEnabled) &&
-                          checkRegistrationStatus(event).isRegistrationOpen && (
-                            <>
-                              {event.webRegistrationEnabled && (
-                                <Button
-                                  variant="outline"
-                                  className="group bg-blue-50 h-10 min-w-32 flex items-center justify-center space-x-1"
-                                  onClick={() => handleWebRegistration(event)}
-                                >
-                                  <span>웹에서 신청하기</span>
-                                  <ArrowRightCircle className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                </Button>
-                              )}
-                              {event.kakaoRegistrationEnabled && (
-                                <a
-                                  href={event.kakaoPlusUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex h-10 min-w-32 items-center justify-center rounded-md border border-input bg-yellow-50 px-4 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-                                >
-                                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="#000000">
-                                    <path d="M12 3C5.9 3 1 6.7 1 11.3c0 2.6 1.7 5 4.5 6.5-.2.8-.8 2.7-.8 3.1 0 .4.2.5.4.4.2-.1 2.6-1.7 3.7-2.5.9.2 1.9.3 3.2.3 6.1 0 11-3.7 11-8.3C23 6.7 18.1 3 12 3" />
-                                  </svg>
-                                  <span>카카오톡으로 신청</span>
-                                </a>
-                              )}
-                            </>
-                          )}
+                    <CardFooter className="flex flex-col sm:flex-row justify-between border-t pt-3 sm:pt-4 px-4 sm:px-6 gap-2 sm:gap-3">
+                      <div className="flex flex-wrap gap-2 w-full sm:w-auto justify-center sm:justify-start">
+                        {/* 웹 접수 버튼 */}
+                        {event.webRegistrationEnabled && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className={`text-xs sm:text-sm py-1 h-auto ${
+                              checkRegistrationStatus(event).isRegistrationOpen
+                                ? "border-blue-500 text-blue-500 hover:bg-blue-50"
+                                : "border-gray-300 text-gray-400 cursor-not-allowed"
+                            }`}
+                            onClick={() => handleWebRegistration(event)}
+                            disabled={!checkRegistrationStatus(event).isRegistrationOpen}
+                          >
+                            <ArrowRightCircle className="mr-1 h-3.5 w-3.5" />웹 접수하기
+                          </Button>
+                        )}
+
+                        {/* 카카오 접수 버튼 */}
+                        {event.kakaoRegistrationEnabled && (
+                          <a
+                            href={event.kakaoPlusUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`inline-flex items-center justify-center text-xs sm:text-sm rounded-md border border-yellow-400 bg-yellow-50 px-2.5 py-1 ${
+                              checkRegistrationStatus(event).isRegistrationOpen
+                                ? "text-yellow-600 hover:bg-yellow-100"
+                                : "text-gray-400 border-gray-300 bg-gray-50 cursor-not-allowed"
+                            }`}
+                            onClick={(e) =>
+                              !checkRegistrationStatus(event).isRegistrationOpen &&
+                              e.preventDefault()
+                            }
+                          >
+                            <svg
+                              className="w-3.5 h-3.5 mr-1"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M12 3C7.03125 3 3 6.03981 3 9.84531C3 12.3731 4.60938 14.5969 7.11094 15.7672C6.98438 16.1747 6.39062 18.1275 6.30469 18.4406C6.30469 18.4406 6.27656 18.5906 6.37656 18.6634C6.47656 18.7362 6.60156 18.6975 6.60156 18.6975C7.11719 18.6337 9.60938 16.9037 10.0766 16.5487C10.7063 16.6559 11.3531 16.7109 12 16.7109C16.9688 16.7109 21 13.6712 21 9.86568C21 6.06018 16.9688 3 12 3Z" />
+                            </svg>
+                            카카오톡 접수
+                          </a>
+                        )}
                       </div>
 
-                      {/* 관리자용 버튼 */}
+                      {/* 관리자 작업 버튼 */}
                       {isAdmin && (
-                        <div className="flex space-x-2 self-end">
+                        <div className="flex gap-2 w-full sm:w-auto justify-center sm:justify-end mt-2 sm:mt-0">
                           <Button
                             variant="outline"
-                            size="icon"
+                            size="sm"
+                            className="text-xs sm:text-sm py-1 h-auto border-green-500 text-green-500 hover:bg-green-50"
                             onClick={() => handleViewParticipants(event)}
-                            title="참가자 목록 보기"
                           >
-                            <UserRound className="h-4 w-4" />
+                            <UserRound className="mr-1 h-3.5 w-3.5" />
+                            참가자
                           </Button>
                           <Button
                             variant="outline"
-                            size="icon"
+                            size="sm"
+                            className="text-xs sm:text-sm py-1 h-auto border-orange-500 text-orange-500 hover:bg-orange-50"
                             onClick={() => handleEditEvent(event)}
                           >
-                            <Edit className="h-4 w-4" />
+                            <Edit className="mr-1 h-3.5 w-3.5" />
+                            수정
                           </Button>
                           <Button
                             variant="outline"
-                            size="icon"
-                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                            size="sm"
+                            className="text-xs sm:text-sm py-1 h-auto border-red-500 text-red-500 hover:bg-red-50"
                             onClick={() => handleDeleteEvent(event.id)}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="mr-1 h-3.5 w-3.5" />
+                            삭제
                           </Button>
                         </div>
                       )}
@@ -815,6 +848,31 @@ export default function EventsPage() {
           </div>
         )}
       </div>
+
+      {/* 모바일에서 더 나은 사용자 경험을 위한 맨 위로 스크롤 버튼 */}
+      <motion.button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg z-50 sm:hidden"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+        whileHover={{ scale: 1.1 }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 10l7-7m0 0l7 7m-7-7v18"
+          />
+        </svg>
+      </motion.button>
 
       {/* 이벤트 추가/수정 다이얼로그 */}
       <Dialog open={eventDialog} onOpenChange={setEventDialog}>
