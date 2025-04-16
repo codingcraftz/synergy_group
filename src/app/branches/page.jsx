@@ -313,10 +313,11 @@ const mapVariants = {
 };
 
 // 간단한 카카오맵 컴포넌트
-function KakaoMap({ branches, selectedBranch, onSelectBranch }) {
+function KakaoMap({ branches, selectedBranch, onSelectBranch, userLocation }) {
   const mapRef = useRef(null);
   const [mapInstance, setMapInstance] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [userMarker, setUserMarker] = useState(null);
 
   // 맵 초기화
   useEffect(() => {
@@ -356,6 +357,65 @@ function KakaoMap({ branches, selectedBranch, onSelectBranch }) {
       };
     }
   }, []);
+
+  // 사용자 위치 표시
+  useEffect(() => {
+    if (!mapInstance || !userLocation) return;
+
+    // 기존 사용자 마커 제거
+    if (userMarker) {
+      userMarker.setMap(null);
+    }
+
+    // 사용자 위치 마커 생성
+    const position = new window.kakao.maps.LatLng(userLocation.lat, userLocation.lng);
+
+    // 사용자 위치 마커 이미지 설정
+    const userMarkerImage = new window.kakao.maps.MarkerImage(
+      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+      new window.kakao.maps.Size(24, 35),
+      { offset: new window.kakao.maps.Point(12, 35) }
+    );
+
+    const marker = new window.kakao.maps.Marker({
+      position,
+      map: mapInstance,
+      image: userMarkerImage,
+      zIndex: 10,
+    });
+
+    // 사용자 위치 정보창
+    const infoContent = `
+      <div style="padding:5px;font-size:12px;text-align:center;">
+        내 위치
+      </div>
+    `;
+
+    const infowindow = new window.kakao.maps.InfoWindow({
+      content: infoContent,
+      removable: true,
+    });
+
+    // 마커 클릭 시 정보창 표시
+    window.kakao.maps.event.addListener(marker, "click", function () {
+      infowindow.open(mapInstance, marker);
+    });
+
+    setUserMarker(marker);
+
+    // 지도 범위 재설정 (모든 마커와 사용자 위치 포함)
+    if (branches.length > 0) {
+      const bounds = new window.kakao.maps.LatLngBounds();
+      bounds.extend(position); // 사용자 위치
+
+      // 지점 위치들 추가
+      branches.forEach((branch) => {
+        bounds.extend(new window.kakao.maps.LatLng(branch.lat, branch.lng));
+      });
+
+      mapInstance.setBounds(bounds, 100); // 여백 추가
+    }
+  }, [mapInstance, userLocation]);
 
   // 마커 생성 및 업데이트
   useEffect(() => {
@@ -413,6 +473,48 @@ function KakaoMap({ branches, selectedBranch, onSelectBranch }) {
     setMarkers(newMarkers);
   }, [mapInstance, branches, selectedBranch, onSelectBranch]);
 
+  // 사용자 위치와 선택된 지점 사이의 경로 표시 (거리 선으로 연결)
+  useEffect(() => {
+    if (!mapInstance || !userLocation || !selectedBranch) return;
+
+    // 기존 경로 제거 (이전에 생성된 선이 있으면 제거)
+    const existingLine = document.getElementById("distanceLine");
+    if (existingLine) {
+      existingLine.parentNode.removeChild(existingLine);
+    }
+
+    // 경로 좌표 설정
+    const path = [
+      new window.kakao.maps.LatLng(userLocation.lat, userLocation.lng),
+      new window.kakao.maps.LatLng(selectedBranch.lat, selectedBranch.lng),
+    ];
+
+    // 선 객체 생성
+    const polyline = new window.kakao.maps.Polyline({
+      path: path,
+      strokeWeight: 3,
+      strokeColor: "#5B8FF9",
+      strokeOpacity: 0.7,
+      strokeStyle: "dashed",
+    });
+
+    // 선을 지도에 표시
+    polyline.setMap(mapInstance);
+
+    // 경로 객체를 저장하기 위한 DOM 요소 생성 (제거 용도)
+    const lineElement = document.createElement("div");
+    lineElement.id = "distanceLine";
+    lineElement.style.display = "none";
+    document.body.appendChild(lineElement);
+
+    return () => {
+      polyline.setMap(null);
+      if (document.getElementById("distanceLine")) {
+        document.getElementById("distanceLine").remove();
+      }
+    };
+  }, [mapInstance, userLocation, selectedBranch]);
+
   return <div ref={mapRef} className="w-full h-full rounded-lg overflow-hidden"></div>;
 }
 
@@ -423,6 +525,11 @@ export default function BranchesPage() {
   const [filterType, setFilterType] = useState("all"); // all, category, region
   const [filteredBranches, setFilteredBranches] = useState(BRANCHES);
   const [regions, setRegions] = useState(getRegions(BRANCHES));
+  const [userLocation, setUserLocation] = useState(null);
+  const [branchesWithDistance, setBranchesWithDistance] = useState([]);
+  const [sortByDistance, setSortByDistance] = useState(false);
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+  const [locationError, setLocationError] = useState("");
 
   const [heroRef, heroInView] = useInView({ threshold: 0.1, triggerOnce: true });
   const [contentRef, contentInView] = useInView({ threshold: 0.1, triggerOnce: true });
@@ -454,32 +561,108 @@ export default function BranchesPage() {
 
   // 필터 적용
   useEffect(() => {
+    let result = [];
+
     if (selectedFilter === "all") {
-      setFilteredBranches(BRANCHES);
+      result = BRANCHES;
     } else {
       if (filterType === "category") {
-        setFilteredBranches(BRANCHES.filter((branch) => branch.category === selectedFilter));
+        result = BRANCHES.filter((branch) => branch.category === selectedFilter);
       } else if (filterType === "region") {
-        setFilteredBranches(BRANCHES.filter((branch) => branch.region === selectedFilter));
+        result = BRANCHES.filter((branch) => branch.region === selectedFilter);
       }
     }
-  }, [selectedFilter, filterType]);
 
-  // 선택된 필터가 변경되었을 때 첫 번째 지점으로 선택
-  useEffect(() => {
-    if (filteredBranches.length > 0) {
-      setSelectedBranch(filteredBranches[0]);
+    // 거리순 정렬 적용
+    if (sortByDistance && userLocation) {
+      result = [...result].sort((a, b) => {
+        const distanceA = calculateDistance(userLocation.lat, userLocation.lng, a.lat, a.lng);
+        const distanceB = calculateDistance(userLocation.lat, userLocation.lng, b.lat, b.lng);
+        return distanceA - distanceB;
+      });
     }
-  }, [filteredBranches]);
 
-  // 필터 변경 핸들러
-  const handleFilterChange = (filterId, type) => {
-    setSelectedFilter(filterId);
-    setFilterType(type);
+    setFilteredBranches(result);
+  }, [selectedFilter, filterType, sortByDistance, userLocation]);
+
+  // 사용자 위치 기반 거리 계산
+  useEffect(() => {
+    if (userLocation && filteredBranches.length > 0) {
+      const withDistance = filteredBranches.map((branch) => {
+        const distance = calculateDistance(
+          userLocation.lat,
+          userLocation.lng,
+          branch.lat,
+          branch.lng
+        );
+        return { ...branch, distance };
+      });
+      setBranchesWithDistance(withDistance);
+    } else {
+      setBranchesWithDistance(filteredBranches);
+    }
+  }, [filteredBranches, userLocation]);
+
+  // 사용자 위치 찾기
+  const findUserLocation = () => {
+    setIsLoadingLocation(true);
+    setLocationError("");
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ lat: latitude, lng: longitude });
+          setIsLoadingLocation(false);
+        },
+        (error) => {
+          console.error("위치 정보를 가져오는데 실패했습니다:", error);
+          setLocationError("위치 정보를 가져오는데 실패했습니다. 위치 접근 권한을 확인해주세요.");
+          setIsLoadingLocation(false);
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+      );
+    } else {
+      setLocationError("브라우저가 위치 정보 기능을 지원하지 않습니다.");
+      setIsLoadingLocation(false);
+    }
+  };
+
+  // 두 지점 간의 거리 계산 (하버사인 공식)
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // 지구 반경 (km)
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance in km
+    return distance;
+  };
+
+  const deg2rad = (deg) => {
+    return deg * (Math.PI / 180);
+  };
+
+  // 길찾기 열기
+  const openDirections = () => {
+    if (!selectedBranch) return;
+
+    // 카카오맵 길찾기 URL 생성
+    const { lat, lng, name, address } = selectedBranch;
+    const encodedName = encodeURIComponent(name);
+    const encodedAddress = encodeURIComponent(address);
+
+    // 카카오맵 길찾기 URL (모바일과 데스크탑 모두 지원)
+    const kakaoMapUrl = `https://map.kakao.com/link/to/${encodedName},${lat},${lng}`;
+
+    // 새 창에서 열기
+    window.open(kakaoMapUrl, "_blank");
   };
 
   // 지점 정보 카드 수정
-  const BranchCard = ({ branch, isSelected, onClick }) => (
+  const BranchCard = ({ branch, isSelected, onClick, distance }) => (
     <Card
       key={branch.id}
       className={`cursor-pointer transition-all duration-300 ${
@@ -497,9 +680,27 @@ export default function BranchesPage() {
           <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-500 mr-1" />
           {branch.manager} ({branch.phone})
         </div>
+        {distance !== undefined && (
+          <div className="text-xs text-blue-600 mt-1 font-medium">
+            현재 위치에서 약 {distance.toFixed(1)}km
+          </div>
+        )}
       </CardContent>
     </Card>
   );
+
+  // 필터 변경 핸들러
+  const handleFilterChange = (filterId, type) => {
+    setSelectedFilter(filterId);
+    setFilterType(type);
+  };
+
+  // 선택된 필터가 변경되었을 때 첫 번째 지점으로 선택
+  useEffect(() => {
+    if (filteredBranches.length > 0) {
+      setSelectedBranch(filteredBranches[0]);
+    }
+  }, [filteredBranches]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -634,6 +835,40 @@ export default function BranchesPage() {
           </div>
         </div>
 
+        {/* 사용자 위치 버튼 및 정렬 옵션 */}
+        <div className="flex flex-wrap gap-3 mb-6">
+          <Button
+            onClick={findUserLocation}
+            disabled={isLoadingLocation}
+            variant="outline"
+            className="flex items-center gap-1.5 text-xs sm:text-sm"
+          >
+            {isLoadingLocation ? (
+              <div className="animate-spin h-4 w-4 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+            ) : (
+              <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            )}
+            내 위치에서 가까운 지점 찾기
+          </Button>
+
+          {userLocation && (
+            <Button
+              onClick={() => setSortByDistance(!sortByDistance)}
+              variant={sortByDistance ? "default" : "outline"}
+              className="text-xs sm:text-sm"
+            >
+              거리순 정렬 {sortByDistance ? "끄기" : "켜기"}
+            </Button>
+          )}
+        </div>
+
+        {/* 위치 오류 메시지 */}
+        {locationError && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md text-red-600 text-sm">
+            {locationError}
+          </div>
+        )}
+
         {/* 모바일에서는 지도를 먼저 표시하고 그 다음에 지점 목록 표시 */}
         <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 sm:gap-8">
           {/* 지도 및 상세 정보 - 모바일에서는 전체 너비로 표시 */}
@@ -648,6 +883,7 @@ export default function BranchesPage() {
                   branches={filteredBranches}
                   selectedBranch={selectedBranch}
                   onSelectBranch={setSelectedBranch}
+                  userLocation={userLocation}
                 />
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100">
@@ -723,8 +959,28 @@ export default function BranchesPage() {
                         </div>
                       </div>
                     </div>
+
+                    {userLocation && selectedBranch.distance !== undefined && (
+                      <div className="flex items-start">
+                        <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500 mr-2 mt-0.5" />
+                        <div>
+                          <div className="font-semibold text-xs sm:text-sm">현재 위치에서 거리</div>
+                          <div className="text-xs sm:text-sm text-gray-700">
+                            약 {selectedBranch.distance.toFixed(1)}km
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
+
+                {/* 길찾기 버튼 */}
+                <Button
+                  onClick={openDirections}
+                  className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  <MapPin className="w-4 h-4 mr-2" /> 길찾기
+                </Button>
               </motion.div>
             )}
           </div>
@@ -733,13 +989,14 @@ export default function BranchesPage() {
           <div className="lg:col-span-1 order-2 lg:order-1">
             <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3">지점 목록</h3>
             <div className="space-y-3 h-[300px] lg:h-[600px] overflow-y-auto pr-2 sm:pr-4">
-              {filteredBranches.length > 0 ? (
-                filteredBranches.map((branch) => (
+              {branchesWithDistance.length > 0 ? (
+                branchesWithDistance.map((branch) => (
                   <BranchCard
                     key={branch.id}
                     branch={branch}
                     isSelected={selectedBranch?.id === branch.id}
                     onClick={() => setSelectedBranch(branch)}
+                    distance={branch.distance}
                   />
                 ))
               ) : (
