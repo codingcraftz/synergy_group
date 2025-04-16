@@ -497,27 +497,6 @@ export default function CareersPage() {
           </p>
 
           {/* 지원하기 버튼 - 주석 해제 및 모바일 크기 조정 */}
-          <Button
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-full text-base sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto"
-            onClick={handleApply}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-t-2 border-b-2 border-white mr-2"></div>
-                처리 중...
-              </>
-            ) : (
-              <>
-                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                지원하기
-              </>
-            )}
-          </Button>
-
-          <p className="text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6">
-            문의사항은 02-XXX-XXXX 또는 careers@synergygroup.co.kr로 연락주세요.
-          </p>
         </div>
       </motion.section>
 
