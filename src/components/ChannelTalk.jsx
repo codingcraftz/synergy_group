@@ -5,6 +5,9 @@ import ChannelService from "@/utils/ChannelService";
 
 export default function ChannelTalk() {
   useEffect(() => {
+    // 클라이언트 사이드에서만 실행
+    if (typeof window === "undefined") return;
+
     // 채널톡 부트스트랩 - 위치 설정 추가
     ChannelService.boot({
       pluginKey: "7d7c8750-82c7-47f2-88f5-d3ffa1fc275e",
@@ -20,7 +23,9 @@ export default function ChannelTalk() {
 
     // 컴포넌트 언마운트 시 채널톡 종료
     return () => {
-      ChannelService.shutdown();
+      if (typeof window !== "undefined") {
+        ChannelService.shutdown();
+      }
     };
   }, []);
 

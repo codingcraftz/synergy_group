@@ -1,9 +1,14 @@
 class ChannelService {
   constructor() {
-    this.loadScript();
+    // 서버 사이드에서는 실행하지 않음
+    if (typeof window !== "undefined") {
+      this.loadScript();
+    }
   }
 
   loadScript() {
+    if (typeof window === "undefined") return;
+
     (function () {
       var w = window;
       if (w.ChannelIO) {
@@ -41,10 +46,12 @@ class ChannelService {
   }
 
   boot(settings) {
+    if (typeof window === "undefined") return;
     window.ChannelIO("boot", settings);
   }
 
   shutdown() {
+    if (typeof window === "undefined") return;
     window.ChannelIO("shutdown");
   }
 }
