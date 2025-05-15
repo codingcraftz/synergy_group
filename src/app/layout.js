@@ -4,6 +4,9 @@ import Footer from "@/components/Footer";
 import { AdminProvider } from "@/context/AdminContext";
 import { Toaster } from "@/components/ui/toaster";
 import ChannelTalk from "@/components/ChannelTalk";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "시너지그룹", // 페이지 제목
@@ -26,8 +29,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ko">
-      <body>
+    <html lang="ko" suppressHydrationWarning>
+      <body className={inter.className}>
         <AdminProvider>
           <Header />
           <main>{children}</main>

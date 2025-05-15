@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Calendar, User, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -13,6 +13,10 @@ export default function VideoDetailPage() {
   const router = useRouter();
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [controlsVisible, setControlsVisible] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
+  const controlsTimerRef = useRef(null);
 
   useEffect(() => {
     // ID에 해당하는 영상 데이터 찾기
@@ -28,6 +32,70 @@ export default function VideoDetailPage() {
 
     setLoading(false);
   }, [params.id, router]);
+
+  // 비디오 컨트롤 표시 관리
+  const showControls = () => {
+    setControlsVisible(true);
+
+    // 이전 타이머 정리
+    if (controlsTimerRef.current) {
+      clearTimeout(controlsTimerRef.current);
+    }
+
+    // 3초 후 컨트롤 숨기기
+    controlsTimerRef.current = setTimeout(() => {
+      if (isPlaying) {
+        setControlsVisible(false);
+      }
+    }, 3000);
+  };
+
+  // 비디오 이벤트 핸들러
+  const handleVideoPlay = () => {
+    setIsPlaying(true);
+    // 재생 시작 시 컨트롤 숨기기 타이머 시작
+    showControls();
+  };
+
+  const handleVideoPause = () => {
+    setIsPlaying(false);
+    setControlsVisible(true);
+    // 일시정지 시 컨트롤 계속 표시
+    if (controlsTimerRef.current) {
+      clearTimeout(controlsTimerRef.current);
+    }
+  };
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (controlsTimerRef.current) {
+        clearTimeout(controlsTimerRef.current);
+      }
+    };
+  }, []);
+
+  // 자동 재생 시도를 위한 효과
+  useEffect(() => {
+    if (videoRef.current) {
+      const playVideo = async () => {
+        try {
+          // muted로 자동재생 시도 (브라우저 정책 때문에 음소거 필요)
+          videoRef.current.muted = true;
+          await videoRef.current.play();
+
+          // 자동 재생 성공 후 음소거 해제 시도
+          videoRef.current.muted = false;
+          setIsPlaying(true);
+        } catch (error) {
+          console.log("자동 재생이 차단되었습니다:", error);
+          // 자동 재생 실패 시 muted 상태로 유지
+        }
+      };
+
+      playVideo();
+    }
+  }, [video]);
 
   if (loading) {
     return (
@@ -46,13 +114,52 @@ export default function VideoDetailPage() {
       {/* 비디오 플레이어 섹션 */}
       <div className="bg-black w-full">
         <div className="container mx-auto px-4">
-          <div className="aspect-video relative overflow-hidden">
+          <div
+            className="aspect-video relative overflow-hidden"
+            onMouseMove={showControls}
+            onClick={() => {
+              if (videoRef.current) {
+                if (videoRef.current.paused) {
+                  videoRef.current.play();
+                } else {
+                  videoRef.current.pause();
+                }
+              }
+            }}
+          >
             <video
+              ref={videoRef}
               src={video.videoUrl}
               controls
-              autoPlay
+              playsInline
+              preload="auto"
               className="w-full h-full object-contain"
+              onPlay={handleVideoPlay}
+              onPause={handleVideoPause}
             />
+
+            {/* 뒤로가기 버튼 오버레이 */}
+            <AnimatePresence>
+              {controlsVisible && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-4 left-4 z-10"
+                >
+                  <Link href="/videos">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="bg-black/50 hover:bg-black/70 text-white border-transparent rounded-full w-10 h-10 p-0"
+                    >
+                      <ArrowLeft className="w-5 h-5" />
+                    </Button>
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
@@ -65,19 +172,6 @@ export default function VideoDetailPage() {
           transition={{ duration: 0.5 }}
           className="bg-white rounded-lg shadow-md p-6 mb-6"
         >
-          <div className="flex items-center gap-2 mb-1">
-            <Link href="/videos">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-blue-600 hover:text-blue-800 gap-1 p-0"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                영상 목록으로 돌아가기
-              </Button>
-            </Link>
-          </div>
-
           <h1 className="text-3xl font-bold text-gray-900 mb-3">{video.title}</h1>
 
           <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-6">
