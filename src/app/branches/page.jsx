@@ -116,7 +116,7 @@ const BRANCHES = [
     name: "컴패니언 김해(장유)",
     category: "컴패니언",
     region: "경남",
-    address: "김해시 삼문로43번길 19, 1층",
+    address: "경남 김해시 번화1로 44번길 23, 202호",
     phone: "010-8963-7209",
     manager: "노정연",
     email: "companion_gimhae@synergygroup.co.kr",
