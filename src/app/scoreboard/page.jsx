@@ -12,11 +12,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trophy, Users } from "lucide-react";
+import { Trophy, Users, BarChart3 } from "lucide-react";
 import { useAdmin } from "@/context/AdminContext";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -289,6 +299,59 @@ export default function ScoreboardPage() {
                   ))}
                 </TableBody>
               </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="mb-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BarChart3 className="text-blue-500" />
+              <span>팀별 점수 현황</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div style={{ width: "100%", height: "400px" }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={teamRankings.map((team) => ({
+                    name: team.name,
+                    score: Math.round(team.totalScore),
+                    isTop5: teamRankings.indexOf(team) < 5,
+                  }))}
+                  margin={{
+                    top: 20,
+                    right: 30,
+                    left: 20,
+                    bottom: 60,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} fontSize={12} />
+                  <YAxis />
+                  <Tooltip
+                    formatter={(value, name) => [`${value}점`, "총점"]}
+                    labelFormatter={(label) => `팀명: ${label}`}
+                  />
+                  <Bar dataKey="score" name="총점">
+                    {teamRankings.map((team, index) => (
+                      <Cell key={`cell-${index}`} fill={index < 5 ? "#3b82f6" : "#94a3b8"} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="mt-4 flex items-center justify-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                <span>TOP 5 팀 (제주도 여행 대상)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-slate-400 rounded"></div>
+                <span>기타 팀</span>
+              </div>
             </div>
           </CardContent>
         </Card>
