@@ -32,6 +32,22 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// 조별 멤버 순서 정의
+const TEAM_MEMBER_ORDER = {
+  1: ["윤성환", "강구한", "이동화", "윤진희", "김진섭"],
+  2: ["안인선", "이예찬", "고인상", "김유진", "박종승"],
+  3: ["옥승묵", "김규수", "이주연", "박진심", "신정화"],
+  4: ["노정연", "이혜지", "이순현", "이채원", "공효숙"],
+  5: ["이강혁", "박진단", "이효림", "이헌영"],
+  6: ["임순양", "정옥금", "유경령", "김서연"],
+  7: ["김은찬", "최희근", "서일웅", "전반석", "정연주"],
+  8: ["송진옥", "신동주", "송영주", "한성주", "이원준"],
+  9: ["강성무", "강성훈", "이명길", "김영빈"],
+  10: ["백건", "이정열", "황명수", "노승헌", "조은철"],
+  11: ["최준용", "조중훈", "임익희", "김다행", "정종욱"],
+  12: ["윤길준", "김민혁", "윤길상", "김희수", "박다운"]
+};
+
 export default function ScoreboardPage() {
   const { isAdmin } = useAdmin();
   const { toast } = useToast();
@@ -87,13 +103,29 @@ export default function ScoreboardPage() {
               comment
             )
           `
-          )
-          .order("team_id, name");
+          );
 
         if (membersError) throw membersError;
 
+        // 멤버 데이터를 조별 순서대로 정렬
+        const sortedMembersData = membersData.sort((a, b) => {
+          if (a.team_id !== b.team_id) {
+            return a.team_id - b.team_id;
+          }
+          
+          const teamOrder = TEAM_MEMBER_ORDER[a.team_id] || [];
+          const indexA = teamOrder.indexOf(a.name);
+          const indexB = teamOrder.indexOf(b.name);
+          
+          if (indexA === -1 && indexB === -1) return 0;
+          if (indexA === -1) return 1;
+          if (indexB === -1) return -1;
+          
+          return indexA - indexB;
+        });
+
         setTeams(teamsData || []);
-        setMembers(membersData || []);
+        setMembers(sortedMembersData || []);
       } catch (error) {
         console.error("데이터 로드 중 오류가 발생했습니다:", error);
         toast({
@@ -398,7 +430,17 @@ export default function ScoreboardPage() {
                   <TableBody>
                     {members
                       .filter((member) => member.team_id === team.id)
-                      .sort((a, b) => a.name.localeCompare(b.name, "ko"))
+                      .sort((a, b) => {
+                        const teamOrder = TEAM_MEMBER_ORDER[team.id] || [];
+                        const indexA = teamOrder.indexOf(a.name);
+                        const indexB = teamOrder.indexOf(b.name);
+                        
+                        if (indexA === -1 && indexB === -1) return 0;
+                        if (indexA === -1) return 1;
+                        if (indexB === -1) return -1;
+                        
+                        return indexA - indexB;
+                      })
                       .map((member) => {
                         const scores = member.scores || [];
                         const totalBaseScore = scores.reduce(
