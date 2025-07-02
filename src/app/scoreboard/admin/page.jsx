@@ -143,15 +143,21 @@ export default function AdminScoreboardPage() {
     }
   };
 
-  // 실적 금액에 따른 점수 자동 계산
+  // 실적 금액에 따른 점수 자동 계산 (누적 방식)
   useEffect(() => {
-    if (performanceAmount >= 1000000) {
-      setPerformanceScore(5);
-    } else if (performanceAmount >= 300000) {
-      setPerformanceScore(4);
-    } else {
-      setPerformanceScore(0);
+    let score = 0;
+
+    // 30만원 이상 기준: 4점
+    if (performanceAmount >= 300000) {
+      score += 4;
     }
+
+    // 100만원 이상 기준: 추가 5점
+    if (performanceAmount >= 1000000) {
+      score += 5;
+    }
+
+    setPerformanceScore(score);
   }, [performanceAmount]);
 
   // 점수 추가
@@ -704,7 +710,12 @@ export default function AdminScoreboardPage() {
                   }}
                   placeholder="인정 보험료 입력"
                 />
-                <p className="text-xs text-gray-500 mt-1">30만원 이상: 4점, 100만원 이상: 5점</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  30만원 이상: 4점, 100만원 이상: 추가 5점 (누적)
+                </p>
+                <p className="text-xs text-blue-600 mt-1 font-medium">
+                  예시: 100만원 = 4점(30만원 기준) + 5점(100만원 기준) = 9점
+                </p>
               </div>
             </div>
 

@@ -182,6 +182,13 @@ export default function Header() {
           </Link>
 
           <Link
+            href="/training-reviews"
+            className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
+          >
+            교육후기
+          </Link>
+
+          <Link
             href="/contact"
             className="relative after:block after:h-0.5 after:bg-white after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out hover:after:scale-x-100"
           >
@@ -273,6 +280,13 @@ export default function Header() {
               onClick={handleMobileLinkClick}
             >
               인재채용
+            </Link>
+            <Link
+              href="/training-reviews"
+              className="block py-2 border-b border-gray-700"
+              onClick={handleMobileLinkClick}
+            >
+              교육후기
             </Link>
             <Link
               href="/contact"
